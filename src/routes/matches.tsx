@@ -1,5 +1,4 @@
 import { AddMatchModal } from "@/components/AddMatchModal";
-import { CourtMatch } from "@/components/CourtMatch";
 import { PendingMatch } from "@/components/PendingMatch";
 import {
 	Select,
@@ -18,8 +17,7 @@ export const Route = createFileRoute("/matches")({
 });
 
 function RouteComponent() {
-	const { players, matches, addMatch, updateMatch, startMatch, endMatch } =
-		useAppStore();
+	const { players, matches, addMatch, updateMatch, startMatch } = useAppStore();
 	const [filter, setFilter] = useState<"pending" | "in_progress" | "completed">(
 		"pending",
 	);
@@ -46,11 +44,6 @@ function RouteComponent() {
 				toast.error("Error al iniciar el partido");
 			}
 		}
-	};
-
-	const handleEndMatch = (matchId: string) => {
-		endMatch(matchId);
-		toast.success("Partido finalizado correctamente");
 	};
 
 	const filteredMatches = matches.filter((match) => {

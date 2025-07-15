@@ -4,7 +4,6 @@ import type { ComboboxOption } from "@/components/ui/combobox";
 import {
 	Dialog,
 	DialogContent,
-	DialogDescription,
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
@@ -19,7 +18,11 @@ interface AddMatchModalProps {
 	onAddMatch: (match: Omit<Match, "id">) => void;
 }
 
-export function AddMatchModal({ players, matches, onAddMatch }: AddMatchModalProps) {
+export function AddMatchModal({
+	players,
+	matches,
+	onAddMatch,
+}: AddMatchModalProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [teamA1, setTeamA1] = useState<ComboboxOption | null>(null);
 	const [teamA2, setTeamA2] = useState<ComboboxOption | null>(null);
@@ -29,7 +32,7 @@ export function AddMatchModal({ players, matches, onAddMatch }: AddMatchModalPro
 	// Calculate matches played for each player
 	const playerMatchCounts = useMemo(() => {
 		const counts: Record<string, number> = {};
-		
+
 		// Initialize all players with 0 matches
 		for (const player of players) {
 			counts[player.id] = 0;
@@ -58,10 +61,17 @@ export function AddMatchModal({ players, matches, onAddMatch }: AddMatchModalPro
 			.sort((a, b) => a.matchCount - b.matchCount);
 	}, [players, playerMatchCounts]);
 
-	const selectedIds = [teamA1?.value, teamA2?.value, teamB1?.value, teamB2?.value].filter(Boolean);
+	const selectedIds = [
+		teamA1?.value,
+		teamA2?.value,
+		teamB1?.value,
+		teamB2?.value,
+	].filter(Boolean);
 
 	const getDisabledOptions = (currentValue: string | undefined) =>
-		selectedIds.filter((id): id is string => id !== undefined && id !== currentValue);
+		selectedIds.filter(
+			(id): id is string => id !== undefined && id !== currentValue,
+		);
 
 	const handleAdd = () => {
 		const teamA = [teamA1, teamA2]
@@ -83,7 +93,8 @@ export function AddMatchModal({ players, matches, onAddMatch }: AddMatchModalPro
 		teamA2 &&
 		teamB1 &&
 		teamB2 &&
-		new Set([teamA1.value, teamA2.value, teamB1.value, teamB2.value]).size === 4;
+		new Set([teamA1.value, teamA2.value, teamB1.value, teamB2.value]).size ===
+			4;
 
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -95,7 +106,6 @@ export function AddMatchModal({ players, matches, onAddMatch }: AddMatchModalPro
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>Crear Partido</DialogTitle>
-
 				</DialogHeader>
 				<div className="grid gap-4 py-4">
 					<div className="flex flex-col gap-2 w-full">

@@ -23,8 +23,8 @@ function RouteComponent() {
 			<AddPlayerModal onAddPlayer={handleAddPlayer} />
 			<div className="mt-4 space-y-2">
 				{players.map((player) => (
-					<PlayerItem 
-						key={player.id} 
+					<PlayerItem
+						key={player.id}
 						name={player.name}
 						gamesPlayed={player.gamesPlayed}
 						isAvailable={player.isAvailable}

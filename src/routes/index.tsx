@@ -41,7 +41,9 @@ function App() {
 
 					return (
 						<div key={courtNumber} className="border-b pb-2">
-              <h3 className=" font-semibold mb-3 text-gray-700">Cancha {courtNumber}</h3>
+							<h3 className=" font-semibold mb-3 text-gray-700">
+								Cancha {courtNumber}
+							</h3>
 							{matchInCourt ? (
 								<CourtMatch
 									key={matchInCourt.id}
