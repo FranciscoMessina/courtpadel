@@ -21,7 +21,7 @@ export const Route = createRootRoute({
 	component: () => (
 		<>
 			<FooterNav />
-			<main className="mb-18 bg-slate-50">
+			<main className="mb-18 bg-transparent">
 				<Outlet />
 			</main>
 			<Toaster position="top-center" />

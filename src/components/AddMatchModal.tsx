@@ -54,25 +54,27 @@ export function AddMatchModal({
 		const playingPlayerIds = new Set(
 			matches
 				.filter((m) => m.status === "in_progress")
-				.flatMap((m) => [...m.teamA, ...m.teamB].map((p) => p.id))
+				.flatMap((m) => [...m.teamA, ...m.teamB].map((p) => p.id)),
 		);
-		return players
-			.filter((p) => p.isAvailable)
-			.map((p) => {
-				const isPlaying = playingPlayerIds.has(p.id);
-				return {
-					value: p.id,
-					label: `${p.name} (${playerMatchCounts[p.id]} partidos)${isPlaying ? ' (jugando)' : ''}`,
-					originalLabel: p.name,
-					matchCount: playerMatchCounts[p.id],
-					isPlaying,
-				};
-			})
-			// Sort: not playing first, then by matchCount, then playing last
-			.sort((a, b) => {
-				if (a.isPlaying !== b.isPlaying) return a.isPlaying ? 1 : -1;
-				return a.matchCount - b.matchCount;
-			});
+		return (
+			players
+				.filter((p) => p.isAvailable)
+				.map((p) => {
+					const isPlaying = playingPlayerIds.has(p.id);
+					return {
+						value: p.id,
+						label: `${p.name} (${playerMatchCounts[p.id]} partidos)${isPlaying ? " (jugando)" : ""}`,
+						originalLabel: p.name,
+						matchCount: playerMatchCounts[p.id],
+						isPlaying,
+					};
+				})
+				// Sort: not playing first, then by matchCount, then playing last
+				.sort((a, b) => {
+					if (a.isPlaying !== b.isPlaying) return a.isPlaying ? 1 : -1;
+					return a.matchCount - b.matchCount;
+				})
+		);
 	}, [players, playerMatchCounts, matches]);
 
 	const selectedIds = [
@@ -122,8 +124,9 @@ export function AddMatchModal({
 					<DialogTitle>Crear Partido</DialogTitle>
 				</DialogHeader>
 				<div className="grid gap-4 py-4">
-					<div className="flex flex-col gap-2 w-full">
-						<span className="font-semibold">Equipo A</span>
+					<span className="font-semibold">Equipo A</span>
+
+					<div className="flex gap-1 w-full justify-between">
 						<Combobox
 							options={playerOptions}
 							value={teamA1}
@@ -139,8 +142,8 @@ export function AddMatchModal({
 							disabledOptions={getDisabledOptions(teamA2?.value)}
 						/>
 					</div>
-					<div className="flex flex-col gap-2 mt-2">
-						<span className="font-semibold">Equipo B</span>
+					<span className="font-semibold mt-2">Equipo B</span>
+					<div className="flex gap-1 w-full justify-between">
 						<Combobox
 							options={playerOptions}
 							value={teamB1}

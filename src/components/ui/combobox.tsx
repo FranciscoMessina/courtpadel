@@ -46,7 +46,7 @@ export function Combobox({
 	triggerText = "Elegir opción",
 	searchPlaceholder = "Buscar...",
 	emptyText = "No se encontraron resultados.",
-	className = "w-[200px]",
+	className = "",
 	disabled = false,
 	disabledOptions = [],
 }: ComboboxProps) {
@@ -66,7 +66,7 @@ export function Combobox({
 				<PopoverTrigger asChild>
 					<Button
 						variant="outline"
-						className={`justify-start ${className}`}
+						className={`justify-start ${className} `}
 						disabled={disabled}
 					>
 						{value ? value.label : triggerText}
@@ -90,7 +90,7 @@ export function Combobox({
 			<DrawerTrigger asChild>
 				<Button
 					variant="outline"
-					className={`justify-start ${className}`}
+					className={`justify-start ${className} max-w-[150px] overflow-hidden`}
 					disabled={disabled}
 				>
 					{value ? value.label : triggerText}

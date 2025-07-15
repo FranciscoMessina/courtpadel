@@ -60,13 +60,18 @@ function RouteComponent() {
 	);
 	const completedMatches = filteredMatches.filter(
 		(match) => match.status === "completed",
-	);
+	).sort((a, b) => {
+		if (a.endTime && b.endTime) {
+			return b.endTime - a.endTime;
+		}
+		return 0;
+	});
 
 	return (
 		<div className="p-2 ">
 			{/* Pending Matches */}
 			{pendingMatches.length > 0 && (
-				<div className="mt-4">
+				<div className="mt-4 mb-8">
 					<h3 className="ml-2 font-medium text-gray-700 mb-2">Pendientes</h3>
 					<div className="space-y-2">
 						{pendingMatches.map((match) => (
@@ -85,7 +90,7 @@ function RouteComponent() {
 
 			{/* Completed Matches */}
 			{completedMatches.length > 0 && (
-				<div className="mt-4">
+				<div className="mt-4 mb-8">
 					<h3 className="ml-2 font-medium text-gray-700 mb-2">Completados</h3>
 					<div className="space-y-2">
 						{completedMatches.map((match) => {
@@ -99,11 +104,8 @@ function RouteComponent() {
 								duration = `${minutes}m ${seconds < 10 ? "0" : ""}${seconds}s`;
 							}
 							return (
-								<div
-									key={match.id}
-									className="bg-white rounded-lg p-4 shadow-sm border"
-								>
-									<div className="flex flex-row gap-2 items-center justify-center">
+								<div key={match.id} className=" p-4 border-b">
+									<div className="flex flex-row gap-2  items-center">
 										<span className="text-sm text-gray-800">
 											{match.teamA.map((p) => p.name).join(" y ")}
 										</span>
@@ -112,7 +114,7 @@ function RouteComponent() {
 											{match.teamB.map((p) => p.name).join(" y ")}
 										</span>
 									</div>
-									<div className="mt-2 text-center">
+									<div className=" ">
 										<span className="text-xs text-green-600 font-medium">
 											Finalizado
 										</span>
@@ -145,7 +147,7 @@ function RouteComponent() {
 						value={filter}
 						onValueChange={(value: "pending" | "completed") => setFilter(value)}
 					>
-						<SelectTrigger className="w-full ">
+						<SelectTrigger className="w-full bg-slate-50">
 							<SelectValue placeholder="Filtrar partidos" />
 						</SelectTrigger>
 						<SelectContent>

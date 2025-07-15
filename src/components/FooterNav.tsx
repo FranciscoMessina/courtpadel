@@ -8,7 +8,7 @@ import { Link } from "@tanstack/react-router";
 
 export default function FooterNav() {
 	return (
-		<footer className="p-2  gap-2 bg-white text-black justify-between shadow border-b fixed bottom-0 w-full z-50">
+		<footer className="p-2 bg-white  gap-2  text-black justify-between shadow border-b fixed bottom-0 w-full z-50">
 			<nav className="flex flex-row justify-evenly ">
 				<Link to="/">
 					{({ isActive }) => (
