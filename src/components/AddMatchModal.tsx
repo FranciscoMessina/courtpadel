@@ -1,6 +1,8 @@
-import { Button } from "@/components/ui/button";
-import { Combobox } from "@/components/ui/combobox";
-import type { ComboboxOption } from "@/components/ui/combobox";
+import { useMemo, useState } from "react";
+import type { Match, Player } from "../lib/store";
+import { Button } from "./ui/button";
+import { Combobox } from "./ui/combobox";
+import type { ComboboxOption } from "./ui/combobox";
 import {
 	Dialog,
 	DialogContent,
@@ -8,9 +10,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from "@/components/ui/dialog";
-import type { Match, Player } from "@/lib/store";
-import { useMemo, useState } from "react";
+} from "./ui/dialog";
 
 interface AddMatchModalProps {
 	players: Player[];

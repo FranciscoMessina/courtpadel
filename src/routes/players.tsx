@@ -1,7 +1,7 @@
-import { AddPlayerModal } from "@/components/AddPlayerModal";
-import { PlayerItem } from "@/components/PlayerItem";
-import { useAppStore } from "@/lib/store";
 import { createFileRoute } from "@tanstack/react-router";
+import { AddPlayerModal } from "../components/AddPlayerModal";
+import { PlayerItem } from "../components/PlayerItem";
+import { useAppStore } from "../lib/store";
 
 export const Route = createFileRoute("/players")({
 	component: RouteComponent,

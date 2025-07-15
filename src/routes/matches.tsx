@@ -1,16 +1,16 @@
-import { AddMatchModal } from "@/components/AddMatchModal";
-import { PendingMatch } from "@/components/PendingMatch";
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { toast } from "sonner";
+import { AddMatchModal } from "../components/AddMatchModal";
+import { PendingMatch } from "../components/PendingMatch";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "@/components/ui/select";
-import { type Player, useAppStore } from "@/lib/store";
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { toast } from "sonner";
+} from "../components/ui/select";
+import { type Player, useAppStore } from "../lib/store";
 
 export const Route = createFileRoute("/matches")({
 	component: RouteComponent,

@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button";
-import { useAppStore } from "@/lib/store";
 import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { CourtMatch } from "../components/CourtMatch";
+import { Button } from "../components/ui/button";
+import { useAppStore } from "../lib/store";
 
 export const Route = createFileRoute("/")({
 	component: App,

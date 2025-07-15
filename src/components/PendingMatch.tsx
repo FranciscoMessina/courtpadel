@@ -1,4 +1,4 @@
-import type { Match, Player } from "@/lib/store";
+import type { Match, Player } from "../lib/store";
 import { EditMatchModal } from "./EditMatchModal";
 import { Button } from "./ui/button";
 
@@ -10,7 +10,13 @@ interface PendingMatchProps {
 	onStartMatch: (matchId: string) => void;
 }
 
-export const PendingMatch = ({ match, players, matches, onEditMatch, onStartMatch }: PendingMatchProps) => {
+export const PendingMatch = ({
+	match,
+	players,
+	matches,
+	onEditMatch,
+	onStartMatch,
+}: PendingMatchProps) => {
 	const teamANames = match.teamA.map((p) => p.name).join(" y ");
 	const teamBNames = match.teamB.map((p) => p.name).join(" y ");
 

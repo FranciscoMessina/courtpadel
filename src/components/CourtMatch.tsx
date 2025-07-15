@@ -1,4 +1,4 @@
-import type { Match } from "@/lib/store";
+import type { Match } from "../lib/store";
 import { Button } from "./ui/button";
 
 interface CourtMatchProps {
