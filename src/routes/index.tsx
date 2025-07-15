@@ -59,15 +59,6 @@ function App() {
 					);
 				})}
 			</div>
-
-			<div className="mt-8 text-center">
-				<Button
-					onClick={handleResetData}
-					className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg transition-colors"
-				>
-					Reiniciar Todos los Datos
-				</Button>
-			</div>
 		</div>
 	);
 }

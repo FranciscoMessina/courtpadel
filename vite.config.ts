@@ -11,5 +11,8 @@ export default defineConfig({
     viteReact(),
     tailwindcss(),
   ],
+  server: {
+    allowedHosts: ["ladybird-striking-separately.ngrok-free.app"]
+  },
 
 })

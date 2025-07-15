@@ -15,6 +15,8 @@ export interface Match {
 	teamA: Player[];
 	teamB: Player[];
 	courtId?: number; // Court number (1-4) when match is in progress
+	startTime: number | null; // Timestamp when match starts
+	endTime: number | null;   // Timestamp when match ends
 }
 
 interface AppState {
@@ -72,10 +74,12 @@ export const useAppStore = create<AppState>()(
 			},
 
 				// Match actions
-	addMatch: (matchData: Omit<Match, "id">) => {
+	addMatch: (matchData: Omit<Match, "id" | "startTime" | "endTime">) => {
 		const newMatch: Match = {
 			...matchData,
 			id: Date.now().toString(),
+			startTime: null,
+			endTime: null,
 		};
 		set((state) => ({
 			matches: [...state.matches, newMatch],
@@ -95,33 +99,68 @@ export const useAppStore = create<AppState>()(
 	startMatch: (matchId: string) => {
 		const state = get();
 		const inProgressMatches = state.matches.filter(match => match.status === "in_progress");
-		
+
 		// Check if there are available courts (max 4 courts)
 		if (inProgressMatches.length >= 4) {
 			throw new Error("No hay canchas disponibles. Todas las canchas están ocupadas.");
 		}
-		
+
+		// Find the match to be started
+		const matchToStart = state.matches.find(match => match.id === matchId);
+		if (!matchToStart) {
+			throw new Error("El partido no existe.");
+		}
+
+		// Gather all player IDs in the match to be started
+		const newMatchPlayerIds = [
+			...matchToStart.teamA.map(p => p.id),
+			...matchToStart.teamB.map(p => p.id)
+		];
+
+		// Gather all player IDs in all in-progress matches (excluding the match to be started)
+		const activePlayerIds = inProgressMatches
+			.filter(match => match.id !== matchId)
+			.flatMap(match => [
+				...match.teamA.map(p => p.id),
+				...match.teamB.map(p => p.id)
+			]);
+
+		// Check for overlap
+		const hasConflict = newMatchPlayerIds.some(id => activePlayerIds.includes(id));
+		if (hasConflict) {
+			throw new Error("Uno o más jugadores ya están en un partido en curso.");
+		}
+
 		// Find the first available court (1-4)
 		const occupiedCourts = inProgressMatches.map(match => match.courtId).filter(Boolean);
 		let availableCourt = 1;
 		while (occupiedCourts.includes(availableCourt)) {
 			availableCourt++;
 		}
-		
+
 		set((state) => ({
 			matches: state.matches.map((match) =>
 				match.id === matchId
-					? { ...match, status: "in_progress" as const, courtId: availableCourt }
+					? { ...match, status: "in_progress" as const, courtId: availableCourt, startTime: Date.now(), endTime: null }
 					: match
 			),
 		}));
 	},
 
 	endMatch: (matchId: string) => {
+		const match = get().matches.find(match => match.id === matchId);
+
+		const playersInMatch = match ? [...match.teamA, ...match.teamB] : [];
+		for (const player of playersInMatch) {
+			set((state) => ({
+				players: state.players.map(p => p.id === player.id ? { ...p, gamesPlayed: p.gamesPlayed + 1 } : p)
+			}));
+		}
+
 		set((state) => ({
 			matches: state.matches.map((match) =>
 				match.id === matchId
-					? { ...match, status: "completed" as const, courtId: undefined }
+					? { ...match, status: "completed" as const, courtId: undefined, endTime: Date.now() }
 					: match
 			),
 		}));
