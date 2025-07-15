@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { CourtMatch } from "../components/CourtMatch";
-import { Button } from "../components/ui/button";
+
 import { useAppStore } from "../lib/store";
 
 export const Route = createFileRoute("/")({
@@ -9,7 +9,10 @@ export const Route = createFileRoute("/")({
 });
 
 function App() {
-	const { matches, endMatch, resetAllData } = useAppStore();
+	const { matches, endMatch } = useAppStore(state => ({
+		matches: state.matches,
+		endMatch: state.endMatch,
+	}));
 
 	const inProgressMatches = matches.filter(
 		(match) => match.status === "in_progress",
@@ -20,10 +23,7 @@ function App() {
 		toast.success("Partido terminado correctamente");
 	};
 
-	const handleResetData = () => {
-		resetAllData();
-		toast.success("Todos los datos han sido reiniciados");
-	};
+
 
 	// Create court slots (1-4)
 	const courts = Array.from({ length: 4 }, (_, i) => i + 1);
