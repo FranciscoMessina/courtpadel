@@ -15,7 +15,7 @@ import {
 interface AddMatchModalProps {
 	players: Player[];
 	matches: Match[];
-	onAddMatch: (match: Omit<Match, "id">) => void;
+	onAddMatch: (match: Omit<Match, "id" | "startTime" | "endTime">) => void;
 }
 
 export function AddMatchModal({
