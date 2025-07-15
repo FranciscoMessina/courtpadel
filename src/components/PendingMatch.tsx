@@ -6,7 +6,7 @@ interface PendingMatchProps {
 	match: Match;
 	players: Player[];
 	matches: Match[];
-	onEditMatch: (matchId: string, updatedMatch: Omit<Match, "id">) => void;
+	onEditMatch: (matchId: string, updatedMatch: Omit<Match, "id" | "startTime" | "endTime">) => void;
 	onStartMatch: (matchId: string) => void;
 }
 
