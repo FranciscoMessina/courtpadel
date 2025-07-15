@@ -48,18 +48,32 @@ export function AddMatchModal({
 		return counts;
 	}, [players, matches]);
 
-	// Create player options sorted by least played, with match counts
+	// Create player options sorted by least played, with match counts and playing status
 	const playerOptions: ComboboxOption[] = useMemo(() => {
+		// Find all player IDs currently playing
+		const playingPlayerIds = new Set(
+			matches
+				.filter((m) => m.status === "in_progress")
+				.flatMap((m) => [...m.teamA, ...m.teamB].map((p) => p.id))
+		);
 		return players
-			.filter((p) => p.isAvailable) // Only show available players
-			.map((p) => ({
-				value: p.id,
-				label: `${p.name} (${playerMatchCounts[p.id]} partidos)`,
-				originalLabel: p.name,
-				matchCount: playerMatchCounts[p.id],
-			}))
-			.sort((a, b) => a.matchCount - b.matchCount);
-	}, [players, playerMatchCounts]);
+			.filter((p) => p.isAvailable)
+			.map((p) => {
+				const isPlaying = playingPlayerIds.has(p.id);
+				return {
+					value: p.id,
+					label: `${p.name} (${playerMatchCounts[p.id]} partidos)${isPlaying ? ' (jugando)' : ''}`,
+					originalLabel: p.name,
+					matchCount: playerMatchCounts[p.id],
+					isPlaying,
+				};
+			})
+			// Sort: not playing first, then by matchCount, then playing last
+			.sort((a, b) => {
+				if (a.isPlaying !== b.isPlaying) return a.isPlaying ? 1 : -1;
+				return a.matchCount - b.matchCount;
+			});
+	}, [players, playerMatchCounts, matches]);
 
 	const selectedIds = [
 		teamA1?.value,
