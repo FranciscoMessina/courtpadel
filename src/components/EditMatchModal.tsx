@@ -16,7 +16,10 @@ interface EditMatchModalProps {
 	match: Match;
 	players: Player[];
 	matches: Match[];
-	onEditMatch: (matchId: string, updatedMatch: Omit<Match, "id" | "startTime" | "endTime">) => void;
+	onEditMatch: (
+		matchId: string,
+		updatedMatch: Omit<Match, "id" | "startTime" | "endTime">,
+	) => void;
 }
 
 export function EditMatchModal({

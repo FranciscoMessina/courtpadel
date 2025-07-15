@@ -9,10 +9,8 @@ export const Route = createFileRoute("/")({
 });
 
 function App() {
-	const { matches, endMatch } = useAppStore(state => ({
-		matches: state.matches,
-		endMatch: state.endMatch,
-	}));
+	const matches = useAppStore((state) => state.matches);
+	const endMatch = useAppStore((state) => state.endMatch);
 
 	const inProgressMatches = matches.filter(
 		(match) => match.status === "in_progress",
@@ -23,13 +21,11 @@ function App() {
 		toast.success("Partido terminado correctamente");
 	};
 
-
-
 	// Create court slots (1-4)
 	const courts = Array.from({ length: 4 }, (_, i) => i + 1);
 
 	return (
-		<div className="bg-slate-50 min-h-screen w-full p-2">
+		<div className=" w-full p-2">
 			<h1 className="text-xl font-bold mb-4 text-center">
 				Estado de las Canchas
 			</h1>

@@ -91,7 +91,9 @@ function RouteComponent() {
 						{completedMatches.map((match) => {
 							let duration = null;
 							if (match.startTime && match.endTime) {
-								const elapsed = Math.floor((match.endTime - match.startTime) / 1000);
+								const elapsed = Math.floor(
+									(match.endTime - match.startTime) / 1000,
+								);
 								const minutes = Math.floor(elapsed / 60);
 								const seconds = elapsed % 60;
 								duration = `${minutes}m ${seconds < 10 ? "0" : ""}${seconds}s`;
@@ -115,7 +117,9 @@ function RouteComponent() {
 											Finalizado
 										</span>
 										{duration && (
-											<div className="text-xs text-gray-700 mt-1">Duración: {duration}</div>
+											<div className="text-xs text-gray-700 mt-1">
+												Duración: {duration}
+											</div>
 										)}
 									</div>
 								</div>
