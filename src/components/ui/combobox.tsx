@@ -2,7 +2,8 @@
 
 import * as React from "react";
 
-import { Button } from "@/components/ui/button";
+import { useMediaQuery } from "../../hooks/use-media-query";
+import { Button } from "./button";
 import {
 	Command,
 	CommandEmpty,
@@ -10,14 +11,13 @@ import {
 	CommandInput,
 	CommandItem,
 	CommandList,
-} from "@/components/ui/command";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+} from "./command";
+import { Drawer, DrawerContent, DrawerTrigger } from "./drawer";
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
-} from "@/components/ui/popover";
-import { useMediaQuery } from "../../hooks/use-media-query";
+} from "./popover";
 
 export type ComboboxOption = {
 	value: string;
